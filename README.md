@@ -7,6 +7,7 @@ Frontend is done with HTML, CSS, JS and jQuery.
 Bootstrap Libraries and Font Awesome libraries are used.
 
 Link to the project website
+https://sarvesh2000.github.io/Widget-Edutech/login.html
 
 Admin panel is also availabe to manage the backend.
 Contact me through mail to get access to admin panel.
