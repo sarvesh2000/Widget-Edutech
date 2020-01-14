@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo List</title>
+	<!--Custom CSS-->
+	<link rel="stylesheet" type="text/css" href="assets/css/todos.css">
+	<!--Google Fonts-->
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+	<!--Font Awesome Library-->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
+	<!--jQuery-->
+	<script type="text/javascript" src="assets/js/lib/jquery-2.1.4.min.js"></script>
+	<!--Parse SDK-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/2.9.1/parse.js"></script>
+	<!--Parse Init-->
+	<script src="assets/js/parseInit.js"></script>
+	<!--Bootstrap CSS-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!--Retrieve all todos of logged in user from DB-->
+	<script>
+		var currentUser=Parse.User.current();
+		if(currentUser){
+			const Todos = Parse.Object.extend('Todos');
+			const query = new Parse.Query(Todos);
+			query.equalTo("username",Parse.User.current().getUsername());
+			query.exists("Todo");
+			query.find().then((results) => {
+			// You can use the "get" method to get the value of an attribute
+			// Ex: response.get("<ATTRIBUTE_NAME>")
+			if (typeof document !== 'undefined') {
+				for(var i=0;i<results.length;i++){
+					var todoText=results[i].get("Todo");
+					console.log(todoText);
+					//create a new li and add to ul
+					$("ul").append("<li value='"+todoText+"'>" + todoText + "</li>");
+				}
+				//document.write(`Todos: ${JSON.stringify(results[0])}`);
+			}
+			}, (error) => {
+			if (typeof document !== 'undefined') document.write(`Error while fetching Todos: ${JSON.stringify(error)}`);
+			console.error('Error while fetching Todos', error);
+			});
+		}else{
+			alert("Not Logged in");
+			document.location.href="login.html";
+		}
+	</script>
+	<!--Logout Script-->
+	<script>
+		function logout(){
+		Parse.User.logOut().then(() => {
+			var currentUser = Parse.User.current();  // this will now be null
+			if (Parse.User.current())
+                console.log("Failed to log out!");
+			alert("Logged Out");
+      });
+}
+	</script>
+</head>
+<body>
+	<h3 class="display-3 text-center">Welcome <span id="user"></span></h3>
+<div id="container">
+	<h1>To-Do List <i class="fa fa-plus"></i></h1>
+	<input type="text" placeholder="Add New Todo">
+
+	<ul>
+		
+	</ul>
+</div>
+<div style="text-align: center;">
+	<a class="btn btn-primary text-center" id="logout" href="login.html" onclick="logout()" role="button">LOG OUT</a>
+</div>
+<script>
+			document.getElementById("user").textContent=Parse.User.current().getUsername();
+</script>
+
+<!--Custom Script-->
+<script type="text/javascript" src="assets/js/todos.js"></script>
+</body>
+</html>

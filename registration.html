@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Registration</title>
+    <!--bootstrap cdn-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <!--Parse SDK-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parse/2.9.1/parse.js"></script>
+    <!--Parse Init-->
+    <script src="assets/js/parseInit.js"></script>
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!--Login Auth-->
+    <script>
+        function signup(){
+            const user = new Parse.User()
+            user.set('username', document.getElementById("username").value);
+            user.set('email', document.getElementById("email").value);
+            user.set('password', document.getElementById("password").value);
+
+            user.signUp().then((user) => {
+            if (typeof document !== 'undefined') document.location.href="index.html"
+            }).catch(error => {
+            if (typeof document !== 'undefined') document.write(`Error while signing up user: ${JSON.stringify(error)}`);
+            console.error('Error while signing up user', error);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <!--login form-->
+    <div class="container">
+        <div class="row">
+
+            <form style="margin: 10% auto;">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+
+
+                <button type="button" class="btn btn-primary" onclick="signup()">Login</button>
+                <a href="login.html">Already have an Account? Click to login</a>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!--JS, Popper.js, and jQuery-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+</body>
+
+</html>
